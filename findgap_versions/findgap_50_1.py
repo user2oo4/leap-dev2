@@ -127,7 +127,7 @@ DEF_D: float = 0.01
 DEF_SIGMA: float = 0.1
 DEF_BETA: float = 0.01
 DEF_NS: int = 50 # can change this to 10, 20, 50
-DEF_LOOP: int = 4
+DEF_LOOP: int = 1
 DEF_PASS: float = 4 * (1.0 / (DEF_SIGMA * DEF_SIGMA)) * math.log(1.0 / DEF_BETA)
 
 
@@ -275,6 +275,7 @@ cs = result[4]
 u = compute_result[cs]
 u['TTS'] = math.log(1 - 0.99) / math.log(1 - u['0no']) * (20 * 1000 + 1000) / 1000
 u['optimality_gap'] = 1 - u["best"]/optimal_solution
+
 
 f = open(f'results/findgap_results_{DEF_NS}_{DEF_LOOP}/{iname}.csv', 'w', encoding='utf-8')
 f.write(f'{cs}, {running_time}, {u["optimality_gap"]}, {u["0no"]}, {u["3no"]}, {u["TTS"]}')

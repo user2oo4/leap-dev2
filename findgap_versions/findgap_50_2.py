@@ -127,7 +127,7 @@ DEF_D: float = 0.01
 DEF_SIGMA: float = 0.1
 DEF_BETA: float = 0.01
 DEF_NS: int = 50 # can change this to 10, 20, 50
-DEF_LOOP: int = 4
+DEF_LOOP: int = 2
 DEF_PASS: float = 4 * (1.0 / (DEF_SIGMA * DEF_SIGMA)) * math.log(1.0 / DEF_BETA)
 
 
