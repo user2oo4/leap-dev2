@@ -1,6 +1,7 @@
 import plotly.graph_objs as go
 import pandas as pd
 import os
+import math 
 
 mycwd = os.getcwd()
 print(mycwd)
@@ -12,29 +13,196 @@ df = pd.read_csv('results/all_results')
 print(df)
 
 print(df['version'])
+df['std_dev'] = [2 * math.sqrt(i * (1 - i) / 1000) for i in df['0no']]
 
-tmp1 = df[df['version'] == '50_1']
-tmp2 = df[df['version'] == '50_2']
 tmp3 = df[df['version'] == '50_4']
+tmp5 = df[df['version'] == '100_4']
 tmp4 = df[df['version'] == 'dwave']
+
 
 fig = go.Figure([
     go.Scatter(
-        name = '50_1',
-        x = tmp1['tests'],
-        y = tmp1['time_to_solution'],
-        line = dict(color = 'rgb(0,100,80)'),
+        name = '50_4',
+        x = tmp3['tests'],
+        y = tmp3['0no'],
+        line = dict(color = 'rgb(31,119,180)'),
         mode = 'lines'
     ),
     go.Scatter(
-        name = '50_2',
-        x = tmp2['tests'],
-        y = tmp2['time_to_solution'],
-        line = dict(color = 'rgb(100,0,80)'),
+        name = 'Upper Bound',
+        x = tmp3['tests'],
+        y = tmp3['0no'] + 2 * tmp3['std_dev'],
+        mode = 'lines',
+        marker = dict(color="#444"),
+        line = dict(width=0),
+        showlegend = False
+    ),
+    go.Scatter(
+        name = 'Lower Bound',
+        x = tmp3['tests'],
+        y = tmp3['0no'] - 2 * tmp3['std_dev'],
+        marker = dict(color="#444"),
+        line = dict(width=0),
+        mode = 'lines',
+        fillcolor = 'rgba(31, 119, 180, 0.3)',
+        fill = 'tonexty',
+        showlegend = False
+    ),
+
+    go.Scatter(
+        name = '100_4',
+        x = tmp5['tests'],
+        y = tmp5['0no'],
+        line = dict(color = 'rgb(119,180,31)'),
         mode = 'lines'
     ),
     go.Scatter(
-        name = '50_3',
+        name = 'Upper Bound',
+        x = tmp5['tests'],
+        y = tmp5['0no'] + 2 * tmp5['std_dev'],
+        mode = 'lines',
+        marker = dict(color="#444"),
+        line = dict(width=0),
+        showlegend = False
+    ),
+    go.Scatter(
+        name = 'Lower Bound',
+        x = tmp5['tests'],
+        y = tmp5['0no'] - 2 * tmp5['std_dev'],
+        marker = dict(color="#444"),
+        line = dict(width=0),
+        mode = 'lines',
+        fillcolor = 'rgba(119, 180, 31, 0.3)',
+        fill = 'tonexty',
+        showlegend = False
+    ),
+    go.Scatter(
+        name = 'dwave',
+        x = tmp4['tests'],
+        y = tmp4['0no'],
+        line = dict(color = 'rgb(180, 31, 119)'),
+        mode = 'lines'
+    ),
+    go.Scatter(
+        name = 'Upper Bound',
+        x = tmp4['tests'],
+        y = tmp4['0no'] + 2 * tmp4['std_dev'],
+        mode = 'lines',
+        marker = dict(color="#444"),
+        line = dict(width=0),
+        showlegend = False
+    ),
+    go.Scatter(
+        name = 'Lower Bound',
+        x = tmp4['tests'],
+        y = tmp4['0no'] - 2 * tmp4['std_dev'],
+        marker = dict(color="#444"),
+        line = dict(width=0),
+        mode = 'lines',
+        fillcolor = 'rgba(180, 31, 119, 0.3)',
+        fill = 'tonexty',
+        showlegend = False
+    ),
+])
+if not os.path.exists("images"):
+    os.mkdir("images")
+fig.write_image("images/fig_0no.png")
+fig.show()
+
+df['std_dev'] = [2 * math.sqrt(i * (1 - i) / 1000) for i in df['3no']]
+fig = go.Figure([
+    go.Scatter(
+        name = '50_4',
+        x = tmp3['tests'],
+        y = tmp3['3no'],
+        line = dict(color = 'rgb(31,119,180)'),
+        mode = 'lines'
+    ),
+    go.Scatter(
+        name = 'Upper Bound',
+        x = tmp3['tests'],
+        y = tmp3['3no'] + 2 * tmp3['std_dev'],
+        mode = 'lines',
+        marker = dict(color="#444"),
+        line = dict(width=0),
+        showlegend = False
+    ),
+    go.Scatter(
+        name = 'Lower Bound',
+        x = tmp3['tests'],
+        y = tmp3['3no'] - 2 * tmp3['std_dev'],
+        marker = dict(color="#444"),
+        line = dict(width=0),
+        mode = 'lines',
+        fillcolor = 'rgba(31, 119, 180, 0.3)',
+        fill = 'tonexty',
+        showlegend = False
+    ),
+
+    go.Scatter(
+        name = '100_4',
+        x = tmp5['tests'],
+        y = tmp5['3no'],
+        line = dict(color = 'rgb(119,180,31)'),
+        mode = 'lines'
+    ),
+    go.Scatter(
+        name = 'Upper Bound',
+        x = tmp5['tests'],
+        y = tmp5['3no'] + 2 * tmp5['std_dev'],
+        mode = 'lines',
+        marker = dict(color="#444"),
+        line = dict(width=0),
+        showlegend = False
+    ),
+    go.Scatter(
+        name = 'Lower Bound',
+        x = tmp5['tests'],
+        y = tmp5['3no'] - 2 * tmp5['std_dev'],
+        marker = dict(color="#444"),
+        line = dict(width=0),
+        mode = 'lines',
+        fillcolor = 'rgba(119, 180, 31, 0.3)',
+        fill = 'tonexty',
+        showlegend = False
+    ),
+    go.Scatter(
+        name = 'dwave',
+        x = tmp4['tests'],
+        y = tmp4['3no'],
+        line = dict(color = 'rgb(180, 31, 119)'),
+        mode = 'lines'
+    ),
+    go.Scatter(
+        name = 'Upper Bound',
+        x = tmp4['tests'],
+        y = tmp4['3no'] + 2 * tmp4['std_dev'],
+        mode = 'lines',
+        marker = dict(color="#444"),
+        line = dict(width=0),
+        showlegend = False
+    ),
+    go.Scatter(
+        name = 'Lower Bound',
+        x = tmp4['tests'],
+        y = tmp4['3no'] - 2 * tmp4['std_dev'],
+        marker = dict(color="#444"),
+        line = dict(width=0),
+        mode = 'lines',
+        fillcolor = 'rgba(180, 31, 119, 0.3)',
+        fill = 'tonexty',
+        showlegend = False
+    ),
+])
+if not os.path.exists("images"):
+    os.mkdir("images")
+fig.write_image("images/fig_3no.png")
+fig.show()
+exit(0)
+
+fig = go.Figure([
+    go.Scatter(
+        name = '50_4',
         x = tmp3['tests'],
         y = tmp3['time_to_solution'],
         line = dict(color = 'rgb(100,80,0)'),
@@ -44,11 +212,40 @@ fig = go.Figure([
         name = 'dwave',
         x = tmp4['tests'],
         y = tmp4['time_to_solution'],
-        line = dict(color = 'rgb(100,100,100)'),
+        line = dict(color = 'rgb(0,100,80)'),
+        mode = 'lines'
+    ),
+    go.Scatter(
+        name = '100_4',
+        x = tmp5['tests'],
+        y = tmp5['time_to_solution'],
+        line = dict(color = 'rgb(80,0,100)'),
         mode = 'lines'
     ),
 ])
-fig.show()
+if not os.path.exists("images"):
+    os.mkdir("images")
+fig.write_image("images/fig_time_to_solution.png")
+
+fig = go.Figure([
+    go.Scatter(
+        name = '50_4',
+        x = tmp3['tests'],
+        y = tmp3['running_time'],
+        line = dict(color = 'rgb(100,80,0)'),
+        mode = 'lines'
+    ),
+    go.Scatter(
+        name = '100_4',
+        x = tmp5['tests'],
+        y = tmp5['running_time'],
+        line = dict(color = 'rgb(80,0,100)'),
+        mode = 'lines'
+    ),
+])
+if not os.path.exists("images"):
+    os.mkdir("images")
+fig.write_image("images/fig_runtime.png")
 exit(0)
 
 

@@ -46,9 +46,65 @@ class FakeChimeraSampler(dimod.Sampler, dimod.Structured):
 
 FCSampler = FakeChimeraSampler()
 
+# parameters
 
+DEF_D: float = 0.01
+DEF_SIGMA: float = 0.1
+DEF_BETA: float = 0.01
+DEF_NS: int = 50 # can change this to 10, 20, 50
+DEF_LOOP: int = 4
+DEF_PASS: float = 4 * (1.0 / (DEF_SIGMA * DEF_SIGMA)) * math.log(1.0 / DEF_BETA)
 
+DEF_LB: float = 0.002
+DEF_UB: float = 0.1
+DEF_BS_RUNS: int = 15
 
+DEF_STEP: float = 0.032
+DEF_TRIES: int = 10
+DEF_SPLIT: int = 4
+DEF_ROUNDING: float = 0.1
+
+print('reading parameters')
+
+param: str = input()
+if param != "default":
+    DEF_D = int(param)
+param: str = input()
+if param != "default":
+    DEF_SIGMA = int(param)
+param: str = input()
+if param != "default":
+    DEF_BETA = int(param)
+param: str = input()
+if param != "default":
+    DEF_NS = int(param)
+param: str = input()
+if param != "default":
+    DEF_LOOP = int(param)
+param: str = input()
+if param != "default":
+    DEF_PASS = int(param)
+param: str = input()
+if param != "default":
+    DEF_LB = int(param)
+param: str = input()
+if param != "default":
+    DEF_UB = int(param)
+param: str = input()
+if param != "default":
+    DEF_BS_RUNS = int(param)
+param: str = input()
+if param != "default":
+    DEF_STEP = int(param)
+param: str = input()
+if param != "default":
+    DEF_TRIES = int(param)
+param: str = input()
+if param != "default":
+    DEF_SPLIT = int(param)
+param: str = input()
+if param != "default":
+    DEF_ROUNDING = int(param)
 
 print('reading input')
 
@@ -123,13 +179,6 @@ def compute(j: float, composite: dimod.Sampler, runs: int) -> dict[str,float]:
     return res
 
 
-DEF_D: float = 0.01
-DEF_SIGMA: float = 0.1
-DEF_BETA: float = 0.01
-DEF_NS: int = 50 # can change this to 10, 20, 50
-DEF_LOOP: int = 2
-DEF_PASS: float = 4 * (1.0 / (DEF_SIGMA * DEF_SIGMA)) * math.log(1.0 / DEF_BETA)
-
 
 def get_d(j: float, delta: float) -> float:
     f1 = compute(j + delta / 2, FC_Composite, DEF_NS)['break'] * DEF_NS * n
@@ -144,9 +193,6 @@ def get_d(j: float, delta: float) -> float:
     return math.log(f1 / f2) / delta
 
 
-DEF_LB: float = 0.002
-DEF_UB: float = 0.1
-DEF_BS_RUNS: int = 15
 
 def get_cs_range(lb: float, ub: float) -> tuple:
     start_low = 0.01
@@ -179,16 +225,11 @@ def get_cs_range(lb: float, ub: float) -> tuple:
     print(f'result: {res_lb}, {res_ub}')
     return (res_lb, res_ub)
 
-DEF_STEP: float = 0.032
-DEF_TRIES: int = 15
-DEF_SPLIT: int = 4
-DEF_ROUNDING: float = 0.1
-
 
 def hill_climb(lb: float, ub: float) -> list[float]:
     result: list[point] = []
-    for tri in range(DEF_TRIES):
-        point = random.random()*(ub-lb)/DEF_SPLIT+lb+(ub-lb)/DEF_SPLIT*(tri%DEF_SPLIT)
+    while len(result) < DEF_TRIES:
+        point = random.random()*(ub-lb)/DEF_SPLIT+lb+(ub-lb)/DEF_SPLIT*(len(result)%DEF_SPLIT)
         # while True:
         #     point = random.random()*(ub-lb)+lb
         #     if (compute(point, FCSampler, 200)['avg'] < optimal_solution * 0.65):
@@ -221,21 +262,6 @@ cs_range = get_cs_range(DEF_LB, DEF_UB)
 
 result = hill_climb(max(cs_range[1], maxW), cs_range[0])
 result.sort()
-
-final_result: dict[int, float] = {}
-for cs in result:
-    final_result[compute(cs, FC_Composite, 1000)["0no"] * 1000] = cs
-
-keys = list(final_result.keys())
-keys.sort()
-print(keys)
-sorted_final_result = {i: final_result[i] for i in keys}
-
-print(sorted_final_result)
-
-result = list(sorted_final_result.values())
-result.reverse()
-result = result[0:5]
 print(result)
 
 running_time = time.time() - start_time
@@ -271,7 +297,7 @@ print(sorted_final_result)
 
 result = list(sorted_final_result.values())
 
-cs = result[4]
+cs = result[len(result) - 1]
 u = compute_result[cs]
 u['TTS'] = math.log(1 - 0.99) / math.log(1 - u['0no']) * (20 * 1000 + 1000) / 1000
 u['optimality_gap'] = 1 - u["best"]/optimal_solution
