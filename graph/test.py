@@ -3,6 +3,7 @@ import pandas as pd
 import os
 import math 
 
+
 mycwd = os.getcwd()
 print(mycwd)
 os.chdir("..")
@@ -18,6 +19,9 @@ df['std_dev'] = [2 * math.sqrt(i * (1 - i) / 1000) for i in df['0no']]
 tmp3 = df[df['version'] == '50_4']
 tmp5 = df[df['version'] == '100_4']
 tmp4 = df[df['version'] == 'dwave']
+tmp6 = df[df['version'] == '200_4']
+
+
 
 
 fig = go.Figure([
@@ -26,7 +30,7 @@ fig = go.Figure([
         x = tmp3['tests'],
         y = tmp3['0no'],
         line = dict(color = 'rgb(31,119,180)'),
-        mode = 'lines'
+        mode = 'lines',
     ),
     go.Scatter(
         name = 'Upper Bound',
@@ -35,7 +39,7 @@ fig = go.Figure([
         mode = 'lines',
         marker = dict(color="#444"),
         line = dict(width=0),
-        showlegend = False
+        showlegend = False,
     ),
     go.Scatter(
         name = 'Lower Bound',
@@ -46,7 +50,7 @@ fig = go.Figure([
         mode = 'lines',
         fillcolor = 'rgba(31, 119, 180, 0.3)',
         fill = 'tonexty',
-        showlegend = False
+        showlegend = False,
     ),
 
     go.Scatter(
@@ -54,7 +58,7 @@ fig = go.Figure([
         x = tmp5['tests'],
         y = tmp5['0no'],
         line = dict(color = 'rgb(119,180,31)'),
-        mode = 'lines'
+        mode = 'lines',
     ),
     go.Scatter(
         name = 'Upper Bound',
@@ -63,7 +67,7 @@ fig = go.Figure([
         mode = 'lines',
         marker = dict(color="#444"),
         line = dict(width=0),
-        showlegend = False
+        showlegend = False,
     ),
     go.Scatter(
         name = 'Lower Bound',
@@ -74,14 +78,43 @@ fig = go.Figure([
         mode = 'lines',
         fillcolor = 'rgba(119, 180, 31, 0.3)',
         fill = 'tonexty',
-        showlegend = False
+        showlegend = False,
     ),
+
+    go.Scatter(
+        name = '200_4',
+        x = tmp6['tests'],
+        y = tmp6['0no'],
+        line = dict(color = 'rgb(180,119,31)'),
+        mode = 'lines',
+    ),
+    go.Scatter(
+        name = 'Upper Bound',
+        x = tmp6['tests'],
+        y = tmp6['0no'] + 2 * tmp6['std_dev'],
+        mode = 'lines',
+        marker = dict(color="#444"),
+        line = dict(width=0),
+        showlegend = False,
+    ),
+    go.Scatter(
+        name = 'Lower Bound',
+        x = tmp6['tests'],
+        y = tmp6['0no'] - 2 * tmp6['std_dev'],
+        marker = dict(color="#444"),
+        line = dict(width=0),
+        mode = 'lines',
+        fillcolor = 'rgba(180, 119, 31, 0.3)',
+        fill = 'tonexty',
+        showlegend = False,
+    ),
+
     go.Scatter(
         name = 'dwave',
         x = tmp4['tests'],
         y = tmp4['0no'],
         line = dict(color = 'rgb(180, 31, 119)'),
-        mode = 'lines'
+        mode = 'lines',
     ),
     go.Scatter(
         name = 'Upper Bound',
@@ -90,7 +123,7 @@ fig = go.Figure([
         mode = 'lines',
         marker = dict(color="#444"),
         line = dict(width=0),
-        showlegend = False
+        showlegend = False,
     ),
     go.Scatter(
         name = 'Lower Bound',
@@ -101,13 +134,18 @@ fig = go.Figure([
         mode = 'lines',
         fillcolor = 'rgba(180, 31, 119, 0.3)',
         fill = 'tonexty',
-        showlegend = False
+        showlegend = False,
     ),
 ])
 if not os.path.exists("images"):
     os.mkdir("images")
 fig.write_image("images/fig_0no.png")
+fig.update_layout(
+    paper_bgcolor='rgba(0,0,0,0)',
+    plot_bgcolor='rgba(0,0,0,0)',
+)
 fig.show()
+exit(0)
 
 df['std_dev'] = [2 * math.sqrt(i * (1 - i) / 1000) for i in df['3no']]
 fig = go.Figure([

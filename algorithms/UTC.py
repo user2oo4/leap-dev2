@@ -126,24 +126,26 @@ running_time = 0
 
 sus: float = UTC(model)
 
-for i in range (0, 5):
-    cs = sus
-    u = compute(cs, C_Composite, 1000)
+cs = sus
+u = compute(cs, C_Composite, 1000)
+if u['0no'] != 0:
     u['TTS'] = math.log(1 - 0.99) / math.log(1 - u['0no']) * (20 * 1000 + 1000) / 1000
-    u['optimality_gap'] = 1 - u["best"]/optimal_solution
-    f = open(f'results/all_results', mode='a')
-    f.write(f'{iname},dwave,{cs},{running_time},{u["optimality_gap"]},{u["0no"]},{u["3no"]},{u["TTS"]}\n')
-    f.close()
+else:
+    u['TTS'] = 1000000000
+u['optimality_gap'] = 1 - u["best"]/optimal_solution
+f = open(f'results/all_results', mode='a')
+f.write(f'{iname},dwave,{cs},{running_time},{u["optimality_gap"]},{u["0no"]},{u["3no"]},{u["TTS"]}\n')
+f.close()
 
-#f = open(f'results/findgap_results_dwave/{iname}.csv', 'w', encoding='utf-8')
-#f.write(f'{cs}, {running_time}, {u["optimality_gap"]}, {u["0no"]}, {u["3no"]}, {u["TTS"]}')
-#f.write(f'Run time: {running_time} seconds\n')
-#f.write(f'Chain strength: {cs}\n')
-#f.write(f'Optimality gap: {u["optimality_gap"]}\n')
-#f.write(f'Success probability: {u["0no"]}\n')
-#f.write(f'3% probability: {u["3no"]}\n')
-#f.write(f'Time to solution: {u["TTS"]} seconds\n')
-#f.close()
+f = open(f'results/findgap_results_dwave/{iname}.csv', 'w', encoding='utf-8')
+f.write(f'{cs}, {running_time}, {u["optimality_gap"]}, {u["0no"]}, {u["3no"]}, {u["TTS"]}')
+f.write(f'Run time: {running_time} seconds\n')
+f.write(f'Chain strength: {cs}\n')
+f.write(f'Optimality gap: {u["optimality_gap"]}\n')
+f.write(f'Success probability: {u["0no"]}\n')
+f.write(f'3% probability: {u["3no"]}\n')
+f.write(f'Time to solution: {u["TTS"]} seconds\n')
+f.close()
 
 
 

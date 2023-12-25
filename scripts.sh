@@ -1,37 +1,6 @@
 #!/bin/sh
-#cat instances_4/er_20_6_16.txt | python findgap_versions/findgap_50_1.py
-#cat instances_4/er_20_6_16.txt | python findgap_versions/findgap_50_2.py
-#cat instances_4/er_20_6_16.txt | python findgap_versions/findgap_50_4.py
-#cat instances_4/er_20_6_64.txt | python findgap_versions/findgap_50_1.py
-#cat instances_4/er_20_6_64.txt | python findgap_versions/findgap_50_2.py
-#cat instances_4/er_20_6_64.txt | python findgap_versions/findgap_50_4.py
-#cat instances_4/er_20_8_16.txt | python findgap_versions/findgap_50_1.py
-#cat instances_4/er_20_8_16.txt | python findgap_versions/findgap_50_2.py
-#cat instances_4/er_20_8_16.txt | python findgap_versions/findgap_50_4.py
-#cat instances_4/er_20_8_64.txt | python findgap_versions/findgap_50_1.py
-#cat instances_4/er_20_8_64.txt | python findgap_versions/findgap_50_2.py
-#cat instances_4/er_20_8_64.txt | python findgap_versions/findgap_50_4.py
-#cat instances_4/er_40_6_16.txt | python findgap_versions/findgap_50_1.py
-#cat instances_4/er_40_6_16.txt | python findgap_versions/findgap_50_2.py
-#cat instances_4/er_40_6_16.txt | python findgap_versions/findgap_50_4.py
-#cat instances_4/er_40_6_64.txt | python findgap_versions/findgap_50_1.py
-cat instances_4/er_40_6_64.txt | python findgap_versions/findgap_50_2.py
-cat instances_4/er_40_6_64.txt | python findgap_versions/findgap_50_4.py
-cat instances_4/er_40_8_16.txt | python findgap_versions/findgap_50_1.py
-cat instances_4/er_40_8_16.txt | python findgap_versions/findgap_50_2.py
-cat instances_4/er_40_8_16.txt | python findgap_versions/findgap_50_4.py
-cat instances_4/er_40_8_64.txt | python findgap_versions/findgap_50_1.py
-cat instances_4/er_40_8_64.txt | python findgap_versions/findgap_50_2.py
-cat instances_4/er_40_8_64.txt | python findgap_versions/findgap_50_4.py
-#cat instances_4/er_60_6_16.txt | python findgap_versions/findgap_50_1.py
-#cat instances_4/er_60_6_16.txt | python findgap_versions/findgap_50_2.py
-#cat instances_4/er_60_6_16.txt | python findgap_versions/findgap_50_4.py
-#cat instances_4/er_60_6_64.txt | python findgap_versions/findgap_50_1.py
-#cat instances_4/er_60_6_64.txt | python findgap_versions/findgap_50_2.py
-#cat instances_4/er_60_6_64.txt | python findgap_versions/findgap_50_4.py
-#cat instances_4/er_60_8_16.txt | python findgap_versions/findgap_50_1.py
-#cat instances_4/er_60_8_16.txt | python findgap_versions/findgap_50_2.py
-#cat instances_4/er_60_8_16.txt | python findgap_versions/findgap_50_4.py
-#cat instances_4/er_60_8_64.txt | python findgap_versions/findgap_50_1.py
-#cat instances_4/er_60_8_64.txt | python findgap_versions/findgap_50_2.py
-#cat instances_4/er_60_8_64.txt | python findgap_versions/findgap_50_4.py
+cat parameters.txt instances_4/er_40_4_32.txt | python algorithms/findgap.py
+cat parameters.txt instances_4/er_40_6_32.txt | python algorithms/findgap.py
+cat parameters.txt instances_4/er_40_8_32.txt | python algorithms/findgap.py
+cat parameters.txt instances_4/er_40_10_32.txt | python algorithms/findgap.py
+cat parameters.txt instances_4/er_40_12_32.txt | python algorithms/findgap.py
